@@ -1,5 +1,7 @@
 const {Router} = require('express'); //роутер
 const bcrypt = require('bcryptjs'); //хэширование пароля
+const config = require('config'); //подключение дефолт.жсок в конфиге с секретной фразой
+const jwt = require('jsonwebtoken'); //авторизация юзера чезе токен
 const {check, validationResult} = require('express-validator'); //подключение валидатора
 const User = require('../Models/User'); //подключение модели пользователя
 const router = Router(); //константа роута
@@ -67,6 +69,14 @@ router.post(
             if (!isMatch) {
                 return res.status(400).json({message: 'Login or password is incorrect'})
             }
+
+            const token = jwt.sign(
+                {userId: user.id}, //данные, которые будут зашифрованы в этом токене. можно добавить мэйл, логин и другое
+                config.get('jwtSecret'), //секретную фразу передаём из настроек
+                {expiresIn: '1h'} //время жизни токена
+            )
+
+            res.json({token, userId: user.id}) //ответ 200, успешная авторизация
 
         } catch (e) {
             res.status(500).json({message: 'Something went wrong, try again'})
