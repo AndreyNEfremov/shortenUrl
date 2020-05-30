@@ -1,0 +1,28 @@
+{
+  "name": "mern_shortenurl",
+  "version": "1.0.0",
+  "description": "MERN_ShortenURL_Minin",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "server": "nodemon app.js"
+  },
+  "keywords": [
+    "mern",
+    "react",
+    "minin"
+  ],
+  "author": "Andrey N Efremov <webremove@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.1",
+    "express": "^4.17.1",
+    "express-validator": "^6.5.0",
+    "mongoose": "^5.9.16",
+    "validator": "^13.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.4"
+  }
+}
