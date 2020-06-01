@@ -1,11 +1,17 @@
 import React from 'react';
+import {BrowserRouter as Router} from 'react-router-dom';
+import {useRoutes} from "./routes";
+import 'materialize-css';
 
 function App() {
-  return (
-    <div>
-      <h1>ShortenURL App</h1>
-    </div>
-  );
+    const routes = useRoutes(false)
+    return (
+        <Router>
+            <div className='container'>
+                <h1>{routes}</h1>
+            </div>
+        </Router>
+    );
 }
 
 export default App;
