@@ -13,9 +13,11 @@ router.post(
         check('email', 'Wrong email').isEmail(), //валидация имэйла
         check('password', 'Minimal password length is 6 characters').isLength({min: 6}) //валидация пароля
     ],
-    async (reg, res) => {
+    async (req, res) => {
         try {
+            console.log('Body:', req.body)
             const errors = validationResult(req); //проверка результата валидации
+
             if (!errors.isEmpty()) {
                 return res.status(400).json({ //если в валидации есть ошибки - возвращаем на фронтэнд
                     errors: errors.array(),
@@ -48,7 +50,7 @@ router.post(
         check('email', 'Enter valid email').normalizeEmail().isEmail(), //приведение и проверка имэйла
         check('password', 'Enter password').exists() //проверка на введение пароля
     ],
-    async (reg, res) => {
+    async (req, res) => {
         try {
             const errors = validationResult(req); //проверка результата валидации
             if (!errors.isEmpty()) {
