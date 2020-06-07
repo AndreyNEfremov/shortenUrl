@@ -8,12 +8,12 @@ const router = Router(); //константа роута
 
 // /api/auth/register страница
 router.post(
-    '/register',
+    '/register', //первый параметр метода POST
     [ //массив миддлвэйров
         check('email', 'Wrong email').isEmail(), //валидация имэйла
         check('password', 'Minimal password length is 6 characters').isLength({min: 6}) //валидация пароля
     ],
-    async (req, res) => {
+    async (req, res) => { //второй параметр метода POST
         try {
             // console.log('Body:', req.body)
             const errors = validationResult(req); //проверка результата валидации
@@ -29,17 +29,18 @@ router.post(
 
             const candidate = await User.findOne({email: email}); //делаем проверку есть ли уже пользователь перед регистрацией, ждем инфы от Юзер есть ли имэйл
             if (candidate) {
-                res.status(400).json({message: 'The user existed'})
+                return res.status(400).json({message: 'The user is existed'})
             }
 
             const hashedPassword = await bcrypt.hash(password, 12); //хэшируем пароль, 12 - сила хэша как я понял
             const user = new User({email, password: hashedPassword}); //новый пользователь с хэшироанным паролем
+            console.log('user', user);
             await user.save(); //сохраняем пользователя
             res.status(201).json({message: 'The user is created'}) //при статусе 201 (создан) выводим сообщение
 
 
         } catch (e) {
-            res.status(500).json({message: 'Something went wrong, try again'})
+            res.status(500).json({message: 'Register - Something went wrong, try again'})
         }
     });
 
@@ -76,12 +77,12 @@ router.post(
                 {userId: user.id}, //данные, которые будут зашифрованы в этом токене. можно добавить мэйл, логин и другое
                 config.get('jwtSecret'), //секретную фразу передаём из настроек
                 {expiresIn: '1h'} //время жизни токена
-            )
+            );
 
             res.json({token, userId: user.id}) //ответ 200, успешная авторизация
 
         } catch (e) {
-            res.status(500).json({message: 'Something went wrong, try again'})
+            res.status(500).json({message: 'Login - Something went wrong, try again'})
         }
     });
 
