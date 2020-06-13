@@ -24,6 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "materialize-css": "^1.0.0-rc.2",
     "mongoose": "^5.9.16",
+    "shortid": "^2.2.15",
     "validator": "^13.0.0"
   },
   "devDependencies": {
