@@ -12,15 +12,15 @@ export const LinksList = ({links}) => {
             <tr>
                 <th>№</th>
                 <th>Source</th>
-                <th>Shorten</th>
+                <th>Shorten URL</th>
                 <th>Open it</th>
             </tr>
             </thead>
 
             <tbody>
-            {links.map(link, index => {
+            {links.map((link, index) => {
                 return (
-                    <tr>
+                    <tr key={link._id}>
                         <td>{index + 1}</td>
                         <td>{link.from}</td>
                         <td>{link.to}</td>
